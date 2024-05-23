@@ -481,6 +481,10 @@ MonoBehaviour:
     AxisZ:
       minAxis: -1
       maxAxis: 1
+  timeRepeting: 0.2
+  lifeTimeParticle: 2
+  playOnAwake: 1
+  timeParticleLook: 5
 --- !u!4 &1630812899
 Transform:
   m_ObjectHideFlags: 0

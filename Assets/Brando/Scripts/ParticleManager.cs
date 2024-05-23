@@ -8,27 +8,31 @@ public class ParticleManager : MonoBehaviour
     [SerializeField] private Mesh particleObject;
     [SerializeField] CustomVector position;
     [SerializeField] CustomVector direction;
+    [SerializeField] float timeRepeting;
+    [SerializeField] float lifeTimeParticle;
+    [SerializeField] bool playOnAwake;
+    [SerializeField] float timeParticleLook;
 
-
-    private void Awake()
+    private void Start()
     {
-        
-    }
-    void Start()
-    {
-        if (particleSO.Count > 0)
-        {
-            CreateParticle(position.RandomVector(), particleSO[0], 5.0f);
-        }
+        if(playOnAwake)
+            InvokeRepeating("InicialParticle", 0, timeRepeting);
     }
 
-    void Update()
+    private void Update()
     {
         float deltaTime = Time.deltaTime;
         UpdateParticles(deltaTime);
         RenderParticles();
+        if (timeParticleLook <= Time.time)
+        {
+            CancelInvoke("InicialParticle");
+        }
     }
-
+    private void InicialParticle()
+    {
+        CreateParticle(position.RandomVector(), particleSO[0], lifeTimeParticle);
+    }
     public void CreateParticle(Vector3 position, ParticleSO soParticle, float lifetime)
     {
         Particle particle = new Particle(position, lifetime, soParticle, particleObject, direction.RandomVector());
